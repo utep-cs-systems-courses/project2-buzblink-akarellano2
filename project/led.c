@@ -1,7 +1,7 @@
 #include <msp430.h>
 #include "led.h"
 #include "stateMachine.h"
-#include "switches.h"
+#include "stateChange.h"
 #include "buzzer.h"
 
 void red_led()
