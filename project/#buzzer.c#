@@ -78,11 +78,11 @@ void pattern4()
 
 void sound_only()
 {
-  int letter[] = {D4, 0};
-  int i;
-  for(i =0; i<sizeof(letter)/sizeof(*letter); i++){
-    periodOfBuzzer(letter[i]);
-    __delay_cycles(1200000);
-  }
-}
 
+  int letter[] = {C4, 0};
+  int i;
+  for(i = 0; i < sizeof(letter)/sizeof(*letter); i++){
+    periodOfBuzzer(letter[i]);
+  }
+  __delay_cycles(1200000);
+    

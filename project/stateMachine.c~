@@ -1,0 +1,51 @@
+#include <msp430.h>
+#include "stateMachine.h"
+#include "switches.h"
+#include "buzzer.h"
+#include "led.h"
+
+void next_state(){
+
+  switch(state){
+
+  case 0:
+
+    beep();
+    break;
+
+  case 1:
+
+    red_led();
+    //song
+    state = 0;
+    break;
+
+  case 2:
+
+    red_led();
+    green_led();
+    //song
+    state = 0;
+    break;
+
+  case 3:
+
+    stopBlink();
+    //song
+    state = 0;
+    break;
+
+  case 4:
+    alternate_led();
+    //song
+    state = 0;
+    break;
+
+  default:
+
+    break;
+  }
+}
+
+    
+    

@@ -1,0 +1,18 @@
+#include <msp430.h>
+#include "led.h"
+#include "stateMachine.h"
+#include "switches.h"
+#include "buzzer.h"
+
+void red_led()
+{
+  int i;
+  for(i = 0;i < 10; i++){
+
+    P1OUT = LED_RED;
+    __delay_cycles(800000);
+    P1OUT = !LED_RED;
+    __delay_cycles(800000);
+
+  }
+}
