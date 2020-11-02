@@ -1,5 +1,5 @@
-#include switches_included
-#define switches_included
+#include stateChange_included
+#define stateChange_included
 #define SWITCHES (SW1 | SW2 | SW3 | SW4)
 #define SW1 BIT0
 #define SW2 BIT1
