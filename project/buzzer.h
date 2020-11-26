@@ -1,5 +1,5 @@
 
-#ifdef buzzer_included
+#ifndef buzzer_included
 #define buzzer_included
 
 void init_buzzer();
@@ -14,6 +14,6 @@ void pattern3();
 
 void pattern4();
 
-void sound_only();l
+void sound_only();
 
 #endif
