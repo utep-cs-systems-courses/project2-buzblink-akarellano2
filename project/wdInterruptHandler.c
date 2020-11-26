@@ -4,25 +4,33 @@
 #include "buzzer.h"
 #include "led.h"
 
+char switch_state;
 void
 {
   __interrupt_vec(WDT_VECTOR) WDT(){ /*250 interrupts per second */
 
     static char blink_count = 0;
-    if(++blink_count == 2 && S1){
-      dim_blink();
-      periodOfBuzzer(0);
-    }
 
-    if(blink_count ==125 && S3){
+    if(switch_state == 4){
+      switch(switch_state){
+      case 4:
+	if(++count < 62){
+	  dim25();
+	}
+	else if(++count < 125){
+	  dim25();
+	}
+	else if(++count == 250){
+	  count = 0;
+	}
+	else{
+	  dim75();
+	}
+	break;
+      }
+    }
+    if(++blink_count == 125){
       state_advance();
-    }
-
-    if(S4){
-      periodOfBuzzer(0);
-      red_on = 0;
-      led_changed =1;
-      led_update();
-      blink_count = 0;
+      blink_count 0;
     }
   }
