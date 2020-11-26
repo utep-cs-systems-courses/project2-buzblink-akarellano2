@@ -4,9 +4,10 @@
 #include "switches.h"
 #include "buzzer.h"
 
-char state;
+//char state;
 char switch_down;
 char switch_state;
+char S1, S2, S3, S4;
 
 static char switch_update_interrupt_sense()
 {
@@ -26,28 +27,16 @@ void switch_init()
   P2DIR &= ~SWITCHES;
 
   switch_update_interrupt_sense();
-  switch_interrupt_handler();
+  led_update();
 }
 
 void switch_interrupt_handler()
 {
   char p2val = switch_update_interrupt_sense();
 
-  if(p2val & SW1 ? 0 : 1){
-    state = 1;
-  }
-
-  else if(p2val & SW2 ? 0 : 1){
-    state = 2;
-  }
-
-  else if(p2val & SW3 ? 0 : 1){
-    state = 3;
-  }
-
-  else if(p2val & SW4 ? 0 : 1){
-    state = 4;
-  }
-
-  next_state();
+  S1 = (p2val & SW1) ? 0 : 1;
+  S2 = (p2val & SW2) ? 0 : 1;
+  S3 = (p2val & SW3) ? 0 : 1;
+  S4 = (p2val & SW4) ? 0 : 1;
+ 
 }

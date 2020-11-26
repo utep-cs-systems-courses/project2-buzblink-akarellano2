@@ -1,19 +1,18 @@
 #include <msp430.h>
 #include "stateMachine.h"
-#include "switches.h"
-#include "buzzer.h"
-#include "led.h"
 
-char switch_state;
+char switch_state_changed;
 void
 {
-  __interrupt_vec(WDT_VECTOR) WDT(){ /*250 interrupts per second */
+  __interrupt_vecc(WDT_VECTOR) WDT(){ /*250 interrupts per second */
 
     static char blink_count = 0;
 
     if(switch_state == 4){
-      switch(switch_state){
+      switch(switch_state_changed){
+	
       case 4:
+	
 	if(++count < 62){
 	  dim25();
 	}

@@ -3,14 +3,11 @@
 
 void state_advance();
 
+void dim_leds(int x);
 char toggle_green();
-
-char toggle_red();
-
-char dim_lights();
-
+char red_blink();
 void dim25();
-
+void dim50();
 void dim75();
 
 #endif

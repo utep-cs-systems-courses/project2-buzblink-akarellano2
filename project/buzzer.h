@@ -4,7 +4,7 @@
 
 void init_buzzer();
 
-void periodOfBuzzer(short cycle);
+void buzzer_set_period(short cycles);
 
 void pattern1();
 

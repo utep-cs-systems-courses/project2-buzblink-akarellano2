@@ -1,6 +1,6 @@
+#include <msp430.h>
 #include "libTimer.h"
 #include "buzzer.h"
-#include <msp430.h>
 
 /*Defining notes to bee used with their frequency */
 #define C4 1911
@@ -11,38 +11,39 @@
 #define A4 1136
 #define B4 1012
 
-void periodOfBuzzer(short cycle) //buzzer clock 
+void init_buzzer() // initialize buzzer
 {
-  
-  CCR0 = cycle;
-  CCR1 = cycle >> 1; //half cycle
-}
-
-void init_buzzer()
-{
-  timerAUpmode();
+  timerAUpmode(); //speaker
   P2SEL2 &= ~(BIT6 | BIT7);
   P2SEL &= ~ BIT7;
   P2SEL |= BIT6;
-  P2DIR = BIT6;
+  P2DIR = BIT6; //output to speaker
 }
 
-void pattern1()
+void buzzer_set_period(short cycles) //buzzer clock 
 {
   
-  int letters[] = {C4,0,D4,0,F4,0,G4,0,B4,0};
+  CCR0 = cycles;
+  CCR1 = cycles >> 1; //half cycle
+}
 
-  int i;
-  while(i <sizeof(letters)){
+
+void pattern1() //first song
+{
+  
+  int letters[] = {C4,D4,F4,G4,B4}; //notes of song
+
+  int i = 0;
+  while(i <sizeof(letters)){ // move across notes
     int count = 0;
     while(count < 20){
-      int count2;
+      int count2 = 0;
       while(count2 < 30000){
 	count2++;
       }
       count++;
     }
-    periodOfBuzzer(letters[i]);
+    buzzer_set_period(letters[i]);
     state_advance();
     i++;
   }
@@ -54,22 +55,22 @@ void pattern1()
     __delay_cycles(1200000); //between each cycle
     }*/
 
-void pattern2()
+void pattern2() // song 2
 {
 
-  int letters[] = {B4, 0, A4, 0, G4, 0, B4, 0, A4, 0, G4, 0};
+  int letters[] = {B4, A4, G4, B4, A4, G4};
 
-  int i;
+  int i = 0;
   while(i <sizeof(letters)){
     int count = 0;
     while(count < 20){
-      int count2;
+      int count2 = 0;
       while(count2 < 30000){
 	count2++;
       }
       count++;
     }
-    periodOfBuzzer(letters[i]);
+    buzzer_set_period(letters[i]);
     state_advance();
     i++;
   }
@@ -80,22 +81,22 @@ void pattern2()
     }*/
 }
 
-void pattern3()
+void pattern3() // song 3 for state 3
 {
 
-  int letters[] = {E4, 0, D4, 0, E4, 0, F4, 0, G4, 0, F4, 0, G4, 0, A4, 0, B4, 0, B4,0, B4, 0};
+  int letters[] = {E4, D4, E4, F4, G4, F4, G4, A4};
 
-  int i;
+  int i = 0;
   while(i <sizeof(letters)){
     int count = 0;
     while(count < 20){
-      int count2;
+      int count2 =0;
       while(count2 < 30000){
 	count2++;
       }
       count++;
     }
-    periodOfBuzzer(letters[i]);
+    buzzer_set_period(letters[i]);
     state_advance();
     i++;
   
@@ -106,22 +107,22 @@ void pattern3()
 }
 }
 
-void pattern4()
+void pattern4() // song 4 for state 4
 {
 
-  int letters[] = {F4, 0, A4, 0, G4, 0, F4, 0, E4, 0, D4, 0, C4, 0};
+  int letters[] = {F4, A4, G4, F4, E4, D4, C4};
 
-  int i;
+  int i = 0;
   while(i <sizeof(letters)){
     int count = 0;
     while(count < 20){
-      int count2;
+      int count2 = 0;
       while(count2 < 30000){
 	count2++;
       }
       count++;
     }
-    periodOfBuzzer(letters[i]);
+    buzzer_set_period(letters[i]);
     state_advance();
     i++;
   } 
@@ -130,28 +131,4 @@ void pattern4()
     __delay_cycles(1200000);
     }*/
 }
-
-void sound_only()
-{
-  int letters[] = {D4, 0};
-  int i;
-  while(i <sizeof(letters)){
-    int count = 0;
-    while(count < 20){
-      int count2;
-      while(count2 < 30000){
-	count2++;
-      }
-      count++;
-    }
-    periodOfBuzzer(letters[i]);
-    state_advance();
-    i++;
-  }
-}
-  /*
-  for(i =0; i<sizeof(letter)/sizeof(*letter); i++){
-    periodOfBuzzer(letter[i]);
-    __delay_cycles(1200000);
-    }*/
 
