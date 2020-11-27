@@ -4,7 +4,9 @@
 #include "buzzer.h"
 #include "switches.h"
 
+static char dim_select = 0;
 static char dimState = 0;
+static char do_dim =  0;
 
 char toggle_green() //green will blink only
 {
@@ -53,16 +55,21 @@ char alternate(){ // switch between both
 }
 
 void dim25(){
+  static char dimState = 0;
   switch(dimState){
   case 0:
-    red_on = 1;
+    red_on = 0;
+    dimState = 1;
     break;
   case 1:
-  case 2:
-  case 3:
     red_on = 0;
+    dimState = 2;
     break;
-  default:
+  case 2:
+    red_on = 0;
+    dimState = 3;
+  case 3:
+    red_on = 1;
     dimState = 0;
     break;
   }
@@ -71,16 +78,22 @@ void dim25(){
 }
 
 void dim50(){
+  static char dimState = 0;
   switch(dimState){
   case 0:
-  case 1:
     red_on = 1;
+    dimState = 1;
+    break;
+  case 1:
+    red_on = 0;
+    dimState = 2;
     break;
   case 2:
+    red_on = 1;
+    dimState = 3;
+    break;
   case 3:
     red_on = 0;
-    break;
-  default:
     dimState = 0;
     break;
   }
@@ -89,16 +102,22 @@ void dim50(){
 }
 
 void dim75(){
+  static char dimState = 0;
   switch(dimState){
   case 0:
-    red_on = 0;
+    red_on = 1;
+    dimState = 1;
     break;
   case 1:
-  case 2:
-  case 3:
     red_on = 1;
+    dimState = 2;
     break;
-  default:
+  case 2:
+    red_on = 1;
+    dimState = 3;
+    break;
+  case 3:
+    red_on = 0;
     dimState = 0;
     break;
   }
@@ -106,6 +125,39 @@ void dim75(){
   led_update();
 }
 
+char dimLights() // dim state advnace
+{
+  //static char dim_select = 0;
+  switch(dim_select){
+  case 0:
+    red_on = 0;
+    led_changed = 1;
+    led_update();
+    dim_select = 1;
+    break;
+  case 1:
+    dim25();
+    dim25();
+    dim25();
+    dim25();
+    dim_select = 2;
+    break;
+  case 2:
+    dim50();
+    dim50();
+    dim_select = 3;
+    break;
+  case 3:
+    dim75();
+    dim75();
+    dim75();
+    dim75(); 
+    dim_select = 0;
+    break;
+  }
+  return 1;
+}
+/*
 char dimLights()
 {
   static char dim = 0;
@@ -133,6 +185,7 @@ char dimLights()
   }
   return 1;
 }
+*/
 
 void state_advance(){
   char changed = 0;
@@ -148,6 +201,7 @@ void state_advance(){
     changed = toggle_green();
     break;
   case 4:
+    // changed = 1;
     changed = dimLights();
     break;
   }
